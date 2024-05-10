@@ -8,8 +8,9 @@ const Hero = () => {
         summary: ""
     });
 
-    const [data,setData] = useState('')
+    const [data, setData] = useState('')
     const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState('');
 
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -19,9 +20,10 @@ const Hero = () => {
         });
     };
 
-    const handleSubmit: React.FormEventHandler<HTMLFormElement>  = async (e) => {
+    const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
         e.preventDefault();
         setIsLoading(true);
+        setError('');
         const options = {
             method: 'GET',
             url: 'https://article-extractor-and-summarizer.p.rapidapi.com/summarize',
@@ -30,25 +32,27 @@ const Hero = () => {
                 length: '2'
             },
             headers: {
-                'X-RapidAPI-Key':  process.env.NEXT_PUBLIC_API_KEY ? `&#34;${process.env.NEXT_PUBLIC_API_KEY}&#34;` : '',
+                'X-RapidAPI-Key': process.env.NEXT_PUBLIC_API_KEY ? `&#34;${process.env.NEXT_PUBLIC_API_KEY}&#34;` : '',
                 'X-RapidAPI-Host': 'article-extractor-and-summarizer.p.rapidapi.com'
             }
         };
-        
+
         try {
             const response = await axios.request(options);
-            console.log(response.data);
+            // console.log(response.data);
             setData(response.data.summary);
         } catch (error) {
             console.error(error);
+            setError('Not a valid URL');
         }
-    finally {
-        setIsLoading(false); // Set loading state back to false after fetching data
-    }
+        finally {
+            setIsLoading(false);
+            // Set loading state back to false after fetching data
+        }
     };
 
     return (
-        <div  className="min-h-screen bg-gradient-to-r from-blue-100 to-green-100 flex justify-center ">
+        <div className="min-h-screen bg-gradient-to-r from-blue-100 to-green-100 flex justify-center ">
             <div className="w-2/3 text-center pt-12">
                 <div className="flex flex-col items-center">
                     <h1 className="text-5xl font-extrabold">Summarize Articles with</h1>
@@ -71,8 +75,9 @@ const Hero = () => {
                         <button className="btn ml-3 bg-orange-400 font-extrabold hover:bg-orange-300">Generate</button>
                     </form>
                 </div>
-                {isLoading && <p className=" mt-5">Loading...</p>} 
-                <p className='mt-5'>{!isLoading && data} </p>
+                {isLoading && <p className=" mt-5">Loading...</p>}
+                {error && <p className="mt-5 text-red-500">{error}</p>}
+                {!isLoading && !error && data && <p className='mt-5'>{data}</p>}
             </div>
         </div>
     );
