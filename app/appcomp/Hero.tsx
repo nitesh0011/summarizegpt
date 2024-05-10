@@ -32,7 +32,7 @@ const Hero = () => {
                 length: '2'
             },
             headers: {
-                'X-RapidAPI-Key': process.env.NEXT_PUBLIC_API_KEY ? `&#34;${process.env.NEXT_PUBLIC_API_KEY}&#34;` : '',
+                'X-RapidAPI-Key': process.env.NEXT_PUBLIC_API_KEY!,
                 'X-RapidAPI-Host': 'article-extractor-and-summarizer.p.rapidapi.com'
             }
         };
@@ -41,9 +41,9 @@ const Hero = () => {
             const response = await axios.request(options);
             // console.log(response.data);
             setData(response.data.summary);
-        } catch (error) {
-            console.error(error);
-            setError('Not a valid URL');
+        } catch (error:any) {
+            console.error(error.message);
+            setError('Not a valid URL or something went wrong');
         }
         finally {
             setIsLoading(false);
@@ -77,7 +77,7 @@ const Hero = () => {
                 </div>
                 {isLoading && <p className=" mt-5">Loading...</p>}
                 {error && <p className="mt-5 text-red-500">{error}</p>}
-                {!isLoading && !error && data && <p className='mt-5'>{data}</p>}
+                {!isLoading && !error &&  <p className='mt-5'>{data}</p>}
             </div>
         </div>
     );
