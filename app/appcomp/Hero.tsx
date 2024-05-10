@@ -30,7 +30,7 @@ const Hero = () => {
                 length: '2'
             },
             headers: {
-                'X-RapidAPI-Key': process.env.NEXT_PUBLIC_API_KEY!,
+                'X-RapidAPI-Key':  process.env.NEXT_PUBLIC_API_KEY ? `&#34;${process.env.NEXT_PUBLIC_API_KEY}&#34;` : '',
                 'X-RapidAPI-Host': 'article-extractor-and-summarizer.p.rapidapi.com'
             }
         };
