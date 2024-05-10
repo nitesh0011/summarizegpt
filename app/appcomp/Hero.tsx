@@ -75,9 +75,9 @@ const Hero = () => {
                         <button className="btn ml-3 bg-orange-400 font-extrabold hover:bg-orange-300">Generate</button>
                     </form>
                 </div>
-                {isLoading && <p className=" mt-5">Loading...</p>}
+                {isLoading && <p className=" mt-5">Just getting things ready for you...</p>}
                 {error && <p className="mt-5 text-red-500">{error}</p>}
-                {!isLoading && !error &&  <p className='mt-5'>{data}</p>}
+                {!isLoading && !error &&  <p className='mt-5 text-left pb-14'>{data}</p>}
             </div>
         </div>
     );
