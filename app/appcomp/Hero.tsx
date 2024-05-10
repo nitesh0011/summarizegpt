@@ -48,7 +48,7 @@ const Hero = () => {
     };
 
     return (
-        <div className="min-h-screen bg-gradient-to-r from-blue-100 to-green-100 flex justify-center">
+        <div  className="min-h-screen bg-gradient-to-r from-blue-100 to-green-100 flex justify-center ">
             <div className="w-2/3 text-center pt-12">
                 <div className="flex flex-col items-center">
                     <h1 className="text-5xl font-extrabold">Summarize Articles with</h1>
